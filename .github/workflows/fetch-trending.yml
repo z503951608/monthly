@@ -1,9 +1,10 @@
 name: Fetch GitHub Trending Monthly
+# 触发规则：定时候选日 + 手动触发
 on:
   schedule:
-    # UTC 每月28、29、30、31号 23:00 触发（覆盖所有月份的最后一天候选）
+    # UTC时间：每月28,29,30,31日 23:00 触发
     - cron: '0 23 28-31 * *'
-  workflow_dispatch:
+  workflow_dispatch: # 手动点击Run workflow随时执行
 
 jobs:
   fetch:
@@ -11,19 +12,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Check if today is last day of month
-        id: check_last_day
-        run: |
-          # 获取当月最后一天
-          LAST_DAY=$(date -d "$(date +%Y-%m-01) +1 month -1 day" +%d)
-          TODAY=$(date +%d)
-          echo "LAST_DAY=${LAST_DAY}" >> $GITHUB_OUTPUT
-          echo "TODAY=${TODAY}" >> $GITHUB_OUTPUT
-          if [ "$TODAY" != "$LAST_DAY" ];then
-            echo "不是当月最后一天，直接退出"
-            exit 1
-          fi
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
