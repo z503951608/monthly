@@ -3,7 +3,7 @@ name: Fetch GitHub Trending Monthly
 on:
   schedule:
     # UTC时间：每月28,29,30,31日 23:00 触发
-    - cron: '0 23 28-31 * *'
+    - cron: '0 0 28-31 * *'
   workflow_dispatch: # 手动点击Run workflow随时执行
 
 jobs:
